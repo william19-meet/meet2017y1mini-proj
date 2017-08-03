@@ -38,12 +38,15 @@ DOWN = 1
 LEFT = 2
 RIGHT = 3
 
+score_list = []
 pos_list = []
 stamp_list = []
 food_pos = []
 food_stamps = []
 snake = turtle.clone()
 snake.shape("square")
+
+score = 0
 
 turtle.hideturtle()
 
@@ -76,7 +79,8 @@ direction = UP
 UP_EDGE = SIZE_Y/2
 def up():
     global direction
-    direction = UP
+    if direction != DOWN:
+       direction = UP
     #move_snake()
     print('You pressed the up key!')
     
@@ -85,7 +89,8 @@ direction = DOWN
 DOWN_EDGE = -SIZE_Y/2
 def down():
     global direction
-    direction = DOWN
+    if direction != UP:
+        direction = DOWN
     #move_snake()
     print('You pressed the down key!')
 
@@ -93,7 +98,8 @@ direction = LEFT
 LEFT_EDGE = -SIZE_X/2
 def left():
     global direction
-    direction = LEFT
+    if direction != RIGHT:
+        direction = LEFT
     #move_snake()
     print('You pressed the left key!')
 
@@ -101,11 +107,13 @@ direction = RIGHT
 RIGHT_EDGE = SIZE_X/2
 def right():
     global direction
-    direction = RIGHT
+    if direction != LEFT:
+        direction = RIGHT
     #move_snake()
     print('You pressed the right key!')
 
 def move_snake():
+    global score
     my_pos = snake.pos()
     x_pos = my_pos[0]
     y_pos = my_pos[1]
@@ -129,6 +137,13 @@ def move_snake():
         pos_list.append(w)
         stamp_list.append(w)
         print('you have eaten the food')
+
+        turtle.clear()
+        score = score +1
+        score_list.append(score)
+        turtle.goto(-SIZE_X/2+5, SIZE_Y/2-12)
+        turtle.write('score = ' + str(score))
+        
 
     if new_y_pos >= UP_EDGE:
         print("you hit the upper edge... game over")
