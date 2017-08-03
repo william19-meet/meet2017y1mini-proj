@@ -5,9 +5,20 @@ turtle.tracer(1,0)
 
 SIZE_X = 800
 SIZE_Y = 500
-turtle.setup(SIZE_X, SIZE_Y)
+turtle.setup(SIZE_X+50, SIZE_Y+50)
+circle = turtle.clone()
 
+circle.penup()
+circle.goto(SIZE_X/2,-SIZE_Y/2)
+circle.pendown()
+circle.goto(SIZE_X/2,SIZE_Y/2)
+circle.goto(-SIZE_X/2,SIZE_Y/2)
+circle.goto(-SIZE_X/2,-SIZE_Y/2)
+circle.goto(SIZE_X/2,-SIZE_Y/2)
+
+circle.hideturtle()
 turtle.penup()
+
 
 SQUARE_SIZE = 20
 START_LENGTH = 1
@@ -50,7 +61,7 @@ def make_food():
     min_x = -int(SIZE_X/2/SQUARE_SIZE)+1
     max_x = int(SIZE_X/2/SQUARE_SIZE)-1
     min_y = -int(SIZE_Y/2/SQUARE_SIZE)+1
-    max_y = int(SIZE_Y/2/SQUARE_SIZE)+1
+    max_y = int(SIZE_Y/2/SQUARE_SIZE)-1
 
     food_x = random.randint(min_x,max_x) *SQUARE_SIZE
     food_y = random.randint(min_y,max_y) *SQUARE_SIZE
@@ -62,7 +73,7 @@ def make_food():
     
 
 direction = UP
-UP_EDGE = 250
+UP_EDGE = SIZE_Y/2
 def up():
     global direction
     direction = UP
@@ -71,7 +82,7 @@ def up():
     
 
 direction = DOWN
-DOWN_EDGE = -250
+DOWN_EDGE = -SIZE_Y/2
 def down():
     global direction
     direction = DOWN
@@ -79,7 +90,7 @@ def down():
     print('You pressed the down key!')
 
 direction = LEFT
-LEFT_EDGE = -400
+LEFT_EDGE = -SIZE_X/2
 def left():
     global direction
     direction = LEFT
@@ -87,7 +98,7 @@ def left():
     print('You pressed the left key!')
 
 direction = RIGHT
-RIGHT_EDGE = 400
+RIGHT_EDGE = SIZE_X/2
 def right():
     global direction
     direction = RIGHT
