@@ -6,21 +6,21 @@ turtle.tracer(1,0)
 SIZE_X = 800
 SIZE_Y = 500
 turtle.setup(SIZE_X+50, SIZE_Y+50)
-circle = turtle.clone()
+triangle = turtle.clone()
 
-circle.penup()
-circle.goto(SIZE_X/2,-SIZE_Y/2)
-circle.pendown()
-circle.goto(SIZE_X/2,SIZE_Y/2)
-circle.goto(-SIZE_X/2,SIZE_Y/2)
-circle.goto(-SIZE_X/2,-SIZE_Y/2)
-circle.goto(SIZE_X/2,-SIZE_Y/2)
+triangle.penup()
+triangle.goto(SIZE_X/2,-SIZE_Y/2)
+triangle.pendown()
+triangle.goto(SIZE_X/2,SIZE_Y/2)
+triangle.goto(-SIZE_X/2,SIZE_Y/2)
+triangle.goto(-SIZE_X/2,-SIZE_Y/2)
+triangle.goto(SIZE_X/2,-SIZE_Y/2)
 
-circle.hideturtle()
+triangle.hideturtle()
 turtle.penup()
 
 
-SQUARE_SIZE = 20
+CIRCLE_SIZE = 20
 START_LENGTH = 1
 
 
@@ -43,31 +43,31 @@ pos_list = []
 stamp_list = []
 food_pos = []
 food_stamps = []
-snake = turtle.clone()
-snake.shape("square")
+circle = turtle.clone()
+circle.shape("circle")
 
 score = 0
 
 turtle.hideturtle()
 
 for i in range(START_LENGTH):
-    x_pos = snake.pos()[0]
-    y_pos = snake.pos()[1]
-    x_pos += SQUARE_SIZE
+    x_pos = circle.pos()[0]
+    y_pos = circle.pos()[1]
+    x_pos += CIRCLE_SIZE
     my_pos = (x_pos,y_pos)
-    snake.goto(x_pos,y_pos)
+    circle.goto(x_pos,y_pos)
     pos_list.append(x_pos)
-    sstamp = snake.stamp()
-    stamp_list.append(sstamp)
+    cstamp = circle.stamp()
+    stamp_list.append(cstamp)
 
 def make_food():
-    min_x = -int(SIZE_X/2/SQUARE_SIZE)+1
-    max_x = int(SIZE_X/2/SQUARE_SIZE)-1
-    min_y = -int(SIZE_Y/2/SQUARE_SIZE)+1
-    max_y = int(SIZE_Y/2/SQUARE_SIZE)-1
+    min_x = -int(SIZE_X/2/CIRCLE_SIZE)+1
+    max_x = int(SIZE_X/2/CIRCLE_SIZE)-1
+    min_y = -int(SIZE_Y/2/CIRCLE_SIZE)+1
+    max_y = int(SIZE_Y/2/CIRCLE_SIZE)-1
 
-    food_x = random.randint(min_x,max_x) *SQUARE_SIZE
-    food_y = random.randint(min_y,max_y) *SQUARE_SIZE
+    food_x = random.randint(min_x,max_x) *CIRCLE_SIZE
+    food_y = random.randint(min_y,max_y) *CIRCLE_SIZE
     food.goto(food_x,food_y)
     k = (food_x,food_y)
     food_pos.append(k)
@@ -112,12 +112,12 @@ def right():
     #move_snake()
     print('You pressed the right key!')
 
-def move_snake():
+def move_circle():
     global score
-    my_pos = snake.pos()
+    my_pos = circle.pos()
     x_pos = my_pos[0]
     y_pos = my_pos[1]
-    new_pos = snake.pos()
+    new_pos = circle.pos()
     new_x_pos = new_pos[0]
     new_y_pos = new_pos[1]
 
@@ -127,13 +127,13 @@ def move_snake():
  
     global food_stamps, food_pos
     
-    if snake.pos() in food_pos:
-        food_ind = food_pos.index(snake.pos())
+    if circle.pos() in food_pos:
+        food_ind = food_pos.index(circle.pos())
         food.clearstamp(food_stamps[food_ind])
         food_pos.pop(food_ind)
         food_stamps.pop(food_ind)
         make_food()
-        w=snake.stamp()
+        w=circle.stamp()
         pos_list.append(w)
         stamp_list.append(w)
         print('you have eaten the food')
@@ -162,40 +162,40 @@ def move_snake():
 
         
     if direction == RIGHT:
-        snake.goto(x_pos + SQUARE_SIZE, y_pos)
+        circle.goto(x_pos + CIRCLE_SIZE, y_pos)
         print('you moved right!')
     
     elif direction == LEFT:
-        snake.goto(x_pos - SQUARE_SIZE, y_pos)
+        circle.goto(x_pos - CIRCLE_SIZE, y_pos)
         print('you moved left!')
     elif direction == DOWN:
-        snake.goto(x_pos, y_pos - SQUARE_SIZE)
+        circle.goto(x_pos, y_pos - CIRCLE_SIZE)
         print('you moved down!')
     elif direction == UP:
-        snake.goto(x_pos, y_pos + SQUARE_SIZE)
+        circle.goto(x_pos, y_pos + CIRCLE_SIZE)
         print('you moved up!')
 
-    if snake.pos() in pos_list[0:-1]:
+    if circle.pos() in pos_list[0:-1]:
         quit()
-    my_pos = snake.pos()
+    my_pos = circle.pos()
     pos_list.append(my_pos)
-    new_stamp = snake.stamp()
+    new_stamp = circle.stamp()
     stamp_list.append(new_stamp)
     old_stamp = stamp_list.pop(0)
-    snake.clearstamp(old_stamp)
+    circle.clearstamp(old_stamp)
     pos_list.pop(0)
 
-    turtle.ontimer(move_snake,TIME_STEP)
-move_snake()
+    turtle.ontimer(move_circle,TIME_STEP)
+move_circle()
 turtle.onkeypress(up, UP_ARROW)
 turtle.onkeypress(down, DOWN_ARROW)
 turtle.onkeypress(left, LEFT_ARROW)
 turtle.onkeypress(right, RIGHT_ARROW)
 turtle.listen()
 
-turtle.register_shape("trash.gif")
+turtle.register_shape("circle")
 food = turtle.clone()
-food.shape("trash.gif")
+food.shape("circle")
 
 make_food()
 ##food_pos = [(100,100), (-100,100), (-100,-100), (100,-100)]
