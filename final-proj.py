@@ -24,6 +24,14 @@ CIRCLE_SIZE = 20
 START_LENGTH = 1
 
 
+r = CIRCLE_SIZE/2
+
+min_size_food = 20
+max_size_food = 100
+
+food = turtle.clone()
+x=random.randint(min_size_food , max_size_food)
+food.dot(x)
 
 UP_ARROW = 'Up'
 LEFT_ARROW = 'Left'
@@ -51,6 +59,8 @@ score = 0
 turtle.hideturtle()
 
 for i in range(START_LENGTH):
+    food_pos_x = food.pos()[0]
+    food_pos_y = food.pos()[1]
     x_pos = circle.pos()[0]
     y_pos = circle.pos()[1]
     x_pos += CIRCLE_SIZE
@@ -127,15 +137,13 @@ def move_circle():
  
     global food_stamps, food_pos
     
-    if circle.pos() in food_pos:
-        food_ind = food_pos.index(circle.pos())
+    if ((food_pos_x - x_pos)**2 + (food_pos_y -  y_pos)**2) <= r**2:
+        food_ind = food_pos.index((food_pos_x, food_pos_y))
         food.clearstamp(food_stamps[food_ind])
         food_pos.pop(food_ind)
         food_stamps.pop(food_ind)
+        circle.dot(CIRCLE_SIZE + 10)
         make_food()
-        w=circle.stamp()
-        pos_list.append(w)
-        stamp_list.append(w)
         print('you have eaten the food')
 
         turtle.clear()
@@ -175,8 +183,6 @@ def move_circle():
         circle.goto(x_pos, y_pos + CIRCLE_SIZE)
         print('you moved up!')
 
-    if circle.pos() in pos_list[0:-1]:
-        quit()
     my_pos = circle.pos()
     pos_list.append(my_pos)
     new_stamp = circle.stamp()
@@ -193,9 +199,8 @@ turtle.onkeypress(left, LEFT_ARROW)
 turtle.onkeypress(right, RIGHT_ARROW)
 turtle.listen()
 
-turtle.register_shape("circle")
-food = turtle.clone()
-food.shape("circle")
+
+
 
 make_food()
 ##food_pos = [(100,100), (-100,100), (-100,-100), (100,-100)]
